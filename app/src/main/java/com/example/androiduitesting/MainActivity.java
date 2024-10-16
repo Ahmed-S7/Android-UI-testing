@@ -2,8 +2,10 @@ package com.example.androiduitesting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nameField = findViewById(R.id.field_nameEntry);
-        newName  = findViewById(R.id.editText_name);
+        newName = findViewById(R.id.editText_name);
 
         cityList = findViewById(R.id.city_list);
 
@@ -64,5 +66,27 @@ public class MainActivity extends AppCompatActivity {
                 cityAdapter.clear();
             }
         });
+
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> cityList, View city, int position, long l) {
+                City selectedCity = (City) cityList.getItemAtPosition(position);
+                String cityName = selectedCity.getCityName();
+
+                switchToCityActivity(cityName);
+            }
+
+        });
+
+
     }
+
+    public void switchToCityActivity(String cityName){
+        Intent cityActivityIntent = new Intent(this, ViewSelectedCityActivity.class );
+        cityActivityIntent.putExtra("cityName", cityName);
+        startActivity(cityActivityIntent);
+
+
+    }
+
 }
