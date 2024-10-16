@@ -30,9 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
-        android:listSelector="#999999">
-
-    </ListView>
+        android:listSelector="@drawable/custom_selector"/>
 
     <LinearLayout
         android:id="@+id/field_nameEntry"

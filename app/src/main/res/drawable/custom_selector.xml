@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- this custom selector was derived from copilot search: https://copilot.microsoft.com/?msockid=39c4e28ec33a65751fa0f1d8c2ca645c 16-10-2024 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@android:color/darker_gray"/>
+    <item android:drawable="@android:color/transparent"/>
+</selector>

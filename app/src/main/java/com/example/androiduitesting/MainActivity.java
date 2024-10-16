@@ -3,6 +3,7 @@ package com.example.androiduitesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-
+//corrections to the AndroidManifest.xml made through Copilot search: https://copilot.microsoft.com/?msockid=39c4e28ec33a65751fa0f1d8c2ca645c, 16-10-2024
 public class MainActivity extends AppCompatActivity {
     // Declare the variables so that you will be able to reference it later.
     ListView cityList;
@@ -69,13 +70,22 @@ public class MainActivity extends AppCompatActivity {
 
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> cityList, View city, int position, long l) {
-                City selectedCity = (City) cityList.getItemAtPosition(position);
-                String cityName = selectedCity.getCityName();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedCity = (String) parent.getItemAtPosition(position);
 
-                switchToCityActivity(cityName);
+                // Switch to the new activity
+                switchToCityActivity(selectedCity);
+
+                // Reset the item view state after handling the click
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setBackgroundColor(Color.TRANSPARENT);
+                        view.setPressed(false);
+                        view.refreshDrawableState();
+                    }
+                });
             }
-
         });
 
 
@@ -87,6 +97,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(cityActivityIntent);
 
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Clear the selection
+        cityList.clearChoices();
+        // Refresh the ListView
+        for (int i = 0; i < cityList.getChildCount(); i++) {
+            cityList.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+        }
+        cityAdapter.notifyDataSetChanged();
     }
 
 }
